@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Typography } from "@mui/material";
-// import AcUnitOutlinedIcon from "@mui/icons-material/AcUnitOutlined";
+import { Typography, Box } from "@mui/material";
+//import AcUnitOutlinedIcon from "@mui/icons-material/AcUnitOutlined";
 import WaterDropOutlinedIcon from "@mui/icons-material/WaterDropOutlined";
 // import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
 import FilterDramaOutlinedIcon from "@mui/icons-material/FilterDramaOutlined";
@@ -39,7 +39,12 @@ const Weather = () => {
   }, []);
 
   return (
-    <>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+    >
       {
         {
           // snow: <AcUnitOutlinedIcon fontSize="large" color="primary" />,
@@ -54,15 +59,14 @@ const Weather = () => {
             <NightsStayOutlinedIcon fontSize="large" color="primary" />
           ),
           "clear-day": <WbSunnyOutlinedIcon fontSize="large" color="primary" />,
-          "clear-night": (
-            <BedtimeOutlined fontSize="large" color="primary" /> //CHANGE: BedtimeOutlinedIcon -> BedtimeOutlined
-          ),
+          //CHANGE: BedtimeOutlinedIcon -> BedtimeOutlined
+          "clear-night": <BedtimeOutlined fontSize="large" color="primary" />,
         }[icon!]
       }
 
-      <Typography>{temperature}</Typography>
+      <Typography>{temperature} &deg;C</Typography>
       <Typography>{location}</Typography>
-    </>
+    </Box>
   );
 };
 

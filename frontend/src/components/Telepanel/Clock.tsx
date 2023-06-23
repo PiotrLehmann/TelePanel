@@ -18,17 +18,16 @@ const Clock = () => {
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100%",
+        height: "20vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      <Typography variant="h3">{date}</Typography>
-      <Typography color="primary.main" variant="h6">
-        {currentTime}
+      <Typography variant="h3">{currentTime}</Typography>
+      <Typography color="primary.main" variant="h5">
+        {date}
       </Typography>
     </Box>
   );
