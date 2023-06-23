@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
-import AcUnitOutlinedIcon from "@mui/icons-material/AcUnitOutlined";
+// import AcUnitOutlinedIcon from "@mui/icons-material/AcUnitOutlined";
 import WaterDropOutlinedIcon from "@mui/icons-material/WaterDropOutlined";
-import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
+// import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
 import FilterDramaOutlinedIcon from "@mui/icons-material/FilterDramaOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import NightsStayOutlinedIcon from "@mui/icons-material/NightsStayOutlined";
-import BedtimeOutlinedIcon from "@mui/icons-material/BedtimeOutlined";
+import { BedtimeOutlined } from "@mui/icons-material"; //CHANGE: BedtimeOutlinedIcon -> BedtimeOutlined
 
 const Weather = () => {
   const [location, setLocation] = useState<string>();
@@ -42,10 +42,10 @@ const Weather = () => {
     <>
       {
         {
-          snow: <AcUnitOutlinedIcon fontSize="large" color="primary" />,
+          // snow: <AcUnitOutlinedIcon fontSize="large" color="primary" />,
           rain: <WaterDropOutlinedIcon fontSize="large" color="primary" />,
           fog: <WaterDropOutlinedIcon fontSize="large" color="primary" />,
-          wind: <AirOutlinedIcon fontSize="large" color="primary" />,
+          // wind: <AirOutlinedIcon fontSize="large" color="primary" />,
           cloudy: <FilterDramaOutlinedIcon fontSize="large" color="primary" />,
           "partly-cloudy-day": (
             <FilterDramaOutlinedIcon fontSize="large" color="primary" />
@@ -55,7 +55,7 @@ const Weather = () => {
           ),
           "clear-day": <WbSunnyOutlinedIcon fontSize="large" color="primary" />,
           "clear-night": (
-            <BedtimeOutlinedIcon fontSize="large" color="primary" />
+            <BedtimeOutlined fontSize="large" color="primary" /> //CHANGE: BedtimeOutlinedIcon -> BedtimeOutlined
           ),
         }[icon!]
       }
