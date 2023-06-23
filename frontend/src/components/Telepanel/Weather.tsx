@@ -60,7 +60,7 @@ const Weather = () => {
         }[icon!]
       }
 
-      <Typography>{temperature}</Typography>
+      <Typography>{temperature} &deg;C</Typography>
       <Typography>{location}</Typography>
     </>
   );

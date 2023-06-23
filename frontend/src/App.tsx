@@ -66,7 +66,14 @@ function App() {
               <Telepanel />
             </Grid>
             <Grid item xs={12} md={12} xl={12}>
-              <Card sx={{ height: "10vh", display: "flex", borderRadius: 5 }}>
+              <Card
+                sx={{
+                  height: "10vh",
+                  display: "flex",
+                  borderRadius: 5,
+                  boxShadow: 0,
+                }}
+              >
                 <CardActions>
                   <Button
                     color="primary"
@@ -104,7 +111,7 @@ function App() {
                   boxShadow: 0,
                 }}
               >
-                <CardContent>
+                <CardContent sx={{ textAlign: "center" }}>
                   <Weather />
                 </CardContent>
               </Card>
@@ -112,6 +119,7 @@ function App() {
             <Grid item xs={6} md={6} xl={6}>
               <Card
                 sx={{
+                  height: "20vh",
                   borderRadius: 5,
                   p: 2,
                   boxShadow: 0,
@@ -123,7 +131,9 @@ function App() {
               </Card>
             </Grid>
             <Grid item xs={6} md={6} xl={6}>
-              <Card sx={{ borderRadius: 5, p: 2, boxShadow: 0 }}>
+              <Card
+                sx={{ height: "20vh", borderRadius: 5, p: 2, boxShadow: 0 }}
+              >
                 <CardContent>
                   <Typography variant="h4">Kalendarz</Typography>
                 </CardContent>
