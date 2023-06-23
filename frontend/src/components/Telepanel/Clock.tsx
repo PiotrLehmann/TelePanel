@@ -18,8 +18,7 @@ const Clock = () => {
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100%",
+        height: "20vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

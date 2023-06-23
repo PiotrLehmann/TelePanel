@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import AcUnitOutlinedIcon from "@mui/icons-material/AcUnitOutlined";
 import WaterDropOutlinedIcon from "@mui/icons-material/WaterDropOutlined";
 import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
@@ -39,7 +39,12 @@ const Weather = () => {
   }, []);
 
   return (
-    <>
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+    >
       {
         {
           snow: <AcUnitOutlinedIcon fontSize="large" color="primary" />,
@@ -62,7 +67,7 @@ const Weather = () => {
 
       <Typography>{temperature} &deg;C</Typography>
       <Typography>{location}</Typography>
-    </>
+    </Box>
   );
 };
 
