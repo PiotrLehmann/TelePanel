@@ -17,6 +17,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Telepanel from "./components/Telepanel/Telepanel";
 import Clock from "./components/Telepanel/Clock";
 import Weather from "./components/Telepanel/Weather";
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const themeDark = createTheme({
   palette: {
@@ -56,6 +58,17 @@ const themeLight = createTheme({
 
 function App() {
   const [lightTheme, setLightTheme] = useState<boolean>(false);
+
+  const fetchDummy = async () => {
+    const data = await axios.get('http://127.0.0.1:5000/api/dummy');
+
+    console.log(data);
+  };
+
+  useEffect(() => {
+    fetchDummy();
+  }, [])
+  
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
