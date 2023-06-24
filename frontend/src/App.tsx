@@ -17,8 +17,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Telepanel from "./components/Telepanel/Telepanel";
 import Clock from "./components/Telepanel/Clock";
 import Weather from "./components/Telepanel/Weather";
-import axios from 'axios';
-import { useEffect } from 'react';
+import axios from "axios";
+import { useEffect } from "react";
+import data from "./jsonExamples/PostList.json";
 
 const themeDark = createTheme({
   palette: {
@@ -58,17 +59,18 @@ const themeLight = createTheme({
 
 function App() {
   const [lightTheme, setLightTheme] = useState<boolean>(false);
+  //const [postList, setPostList] = useState([]);
 
   const fetchDummy = async () => {
-    const data = await axios.get('http://127.0.0.1:5000/api/dummy');
-
-    console.log(data);
+    //const data = await axios.get("http://127.0.0.1:5000/api/dummy");
+    //console.log(data);
   };
 
   useEffect(() => {
     fetchDummy();
-  }, [])
-  
+  }, []);
+
+  const postList = data["Post List"];
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
@@ -162,14 +164,18 @@ function App() {
             <Grid item xs={12} md={6} xl={6}>
               <Card sx={{ borderRadius: 5, boxShadow: 0, height: "89vh" }}>
                 <CardContent>
-                  <Typography variant="h4">Ogłoszenia</Typography>
+                  <Typography ml={1} variant="h4">
+                    Ogłoszenia
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={12} md={6} xl={6}>
               <Card sx={{ borderRadius: 5, boxShadow: 0, height: "89vh" }}>
                 <CardContent>
-                  <Typography variant="h4">Ten Tydzień</Typography>
+                  <Typography ml={1} variant="h4">
+                    Ten Tydzień
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
