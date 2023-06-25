@@ -5,17 +5,18 @@ type PostProps = {
   user: string;
   data: string;
   text: string;
-  importance: number;
 };
 
-const Post = ({ title, user, data, text, importance }: PostProps) => {
+const Post = ({ title, user, data, text }: PostProps) => {
   return (
-    <Box>
-      <Typography variant="h3">{title}</Typography>
-      <Typography variant="h6">
-        Dodane przez: {user} dnia: {data}
+    <Box p={2} borderBottom={1} borderColor={"primary.main"} width="90%" mb={3}>
+      <Typography variant="h5" textAlign="center" mb={0.5}>
+        {title}
       </Typography>
-      <Typography variant="h4">{text}</Typography>
+      <Typography mb={1} fontStyle="italic" variant="subtitle2">
+        {user} - {data}
+      </Typography>
+      <Typography variant="body2">{text}</Typography>
     </Box>
   );
 };

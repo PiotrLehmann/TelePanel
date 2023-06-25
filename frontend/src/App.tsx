@@ -10,6 +10,8 @@ import {
   Typography,
   Container,
   Button,
+  Paper,
+  List,
 } from "@mui/material";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -20,6 +22,11 @@ import Weather from "./components/Telepanel/Weather";
 import axios from "axios";
 import { useEffect } from "react";
 import data from "./jsonExamples/PostList.json";
+import Post from "./components/Ogloszenia/Post";
+import { orange } from "@mui/material/colors";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
 const themeDark = createTheme({
   palette: {
@@ -69,8 +76,6 @@ function App() {
   useEffect(() => {
     fetchDummy();
   }, []);
-
-  const postList = data["Post List"];
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
@@ -146,7 +151,16 @@ function App() {
                 }}
               >
                 <CardContent>
-                  <Typography variant="h4">Materiały</Typography>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <SaveAltIcon fontSize="large" color="primary" />
+                    <Typography ml={1} variant="h4">
+                      Materiały
+                    </Typography>
+                  </Box>
                 </CardContent>
               </Card>
             </Grid>
@@ -155,18 +169,61 @@ function App() {
                 sx={{ height: "20vh", borderRadius: 5, p: 2, boxShadow: 0 }}
               >
                 <CardContent>
-                  <Typography variant="h4">Kalendarz</Typography>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <CalendarMonthOutlinedIcon
+                      fontSize="large"
+                      color="primary"
+                    />
+                    <Typography ml={1} variant="h4">
+                      Kalendarz
+                    </Typography>
+                  </Box>
                 </CardContent>
               </Card>
             </Grid>
           </Grid>
           <Grid container item xs={12} md={8} xl={8} spacing={4}>
             <Grid item xs={12} md={6} xl={6}>
-              <Card sx={{ borderRadius: 5, boxShadow: 0, height: "89vh" }}>
+              <Card
+                sx={{
+                  borderRadius: 5,
+                  boxShadow: 0,
+                  height: "89vh",
+                  overflow: "hidden",
+                }}
+              >
                 <CardContent>
-                  <Typography ml={1} variant="h4">
-                    Ogłoszenia
-                  </Typography>
+                  <Box ml={1} mb={2} display="flex" alignItems="center">
+                    <MailOutlineIcon fontSize="large" color="primary" />
+                    <Typography ml={1} variant="h4">
+                      Ogłoszenia
+                    </Typography>
+                  </Box>
+                  <List
+                    sx={{
+                      overflowY: "scroll",
+                      "&::-webkit-scrollbar": { display: "none" },
+                      height: "75vh",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    {data["Post List"].map((post) => {
+                      return (
+                        <Post
+                          title={post.title}
+                          user={post.user}
+                          data={post.data}
+                          text={post.text}
+                        />
+                      );
+                    })}
+                  </List>
                 </CardContent>
               </Card>
             </Grid>
