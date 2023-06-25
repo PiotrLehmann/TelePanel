@@ -21,6 +21,9 @@ import axios from "axios";
 import { useEffect } from "react";
 import data from "./jsonExamples/PostList.json";
 
+import { config } from './Config';
+import { PublicClientApplication } from "@azure/msal-browser";
+
 const themeDark = createTheme({
   palette: {
     background: {
@@ -57,6 +60,7 @@ const themeLight = createTheme({
   },
 });
 
+// to class?
 function App() {
   const [lightTheme, setLightTheme] = useState<boolean>(false);
   //const [postList, setPostList] = useState([]);
@@ -71,6 +75,8 @@ function App() {
   }, []);
 
   const postList = data["Post List"];
+
+  
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>

@@ -9,6 +9,7 @@
   "author": "MongolDB",
   "license": "ISC",
   "dependencies": {
+    "@azure/msal-browser": "^2.37.1",
     "axios": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
