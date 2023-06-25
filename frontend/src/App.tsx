@@ -76,7 +76,7 @@ function App() {
 
   const postList = data["Post List"];
 
-  
+
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
