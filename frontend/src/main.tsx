@@ -5,6 +5,6 @@ import LoginScreen from "./Screens/LoginScreen.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <LoginScreen />
+    <App />
   </React.StrictMode>
 );
