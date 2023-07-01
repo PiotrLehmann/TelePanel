@@ -10,8 +10,6 @@ import {
   Typography,
   Container,
   Button,
-  Paper,
-  List,
 } from "@mui/material";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -19,14 +17,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Telepanel from "./components/Telepanel/Telepanel";
 import Clock from "./components/Telepanel/Clock";
 import Weather from "./components/Telepanel/Weather";
-import axios from "axios";
-import { useEffect } from "react";
-import data from "./jsonExamples/PostList.json";
-import Post from "./components/Ogloszenia/Post";
-import { orange } from "@mui/material/colors";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import SaveAltIcon from "@mui/icons-material/SaveAlt";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const themeDark = createTheme({
   palette: {
@@ -66,16 +58,17 @@ const themeLight = createTheme({
 
 function App() {
   const [lightTheme, setLightTheme] = useState<boolean>(false);
-  //const [postList, setPostList] = useState([]);
 
   const fetchDummy = async () => {
-    //const data = await axios.get("http://127.0.0.1:5000/api/dummy");
-    //console.log(data);
+    const data = await axios.get('http://127.0.0.1:5000/api/dummy');
+
+    console.log(data);
   };
 
   useEffect(() => {
     fetchDummy();
-  }, []);
+  }, [])
+  
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
@@ -151,16 +144,7 @@ function App() {
                 }}
               >
                 <CardContent>
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <SaveAltIcon fontSize="large" color="primary" />
-                    <Typography ml={1} variant="h4">
-                      Materiały
-                    </Typography>
-                  </Box>
+                  <Typography variant="h4">Materiały</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -169,70 +153,23 @@ function App() {
                 sx={{ height: "20vh", borderRadius: 5, p: 2, boxShadow: 0 }}
               >
                 <CardContent>
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <CalendarMonthOutlinedIcon
-                      fontSize="large"
-                      color="primary"
-                    />
-                    <Typography ml={1} variant="h4">
-                      Kalendarz
-                    </Typography>
-                  </Box>
+                  <Typography variant="h4">Kalendarz</Typography>
                 </CardContent>
               </Card>
             </Grid>
           </Grid>
           <Grid container item xs={12} md={8} xl={8} spacing={4}>
             <Grid item xs={12} md={6} xl={6}>
-              <Card
-                sx={{
-                  borderRadius: 5,
-                  boxShadow: 0,
-                  height: "89vh",
-                  overflow: "hidden",
-                }}
-              >
+              <Card sx={{ borderRadius: 5, boxShadow: 0, height: "89vh" }}>
                 <CardContent>
-                  <Box ml={1} mb={2} display="flex" alignItems="center">
-                    <MailOutlineIcon fontSize="large" color="primary" />
-                    <Typography ml={1} variant="h4">
-                      Ogłoszenia
-                    </Typography>
-                  </Box>
-                  <List
-                    sx={{
-                      overflowY: "scroll",
-                      "&::-webkit-scrollbar": { display: "none" },
-                      height: "75vh",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    {data["Post List"].map((post) => {
-                      return (
-                        <Post
-                          title={post.title}
-                          user={post.user}
-                          data={post.data}
-                          text={post.text}
-                        />
-                      );
-                    })}
-                  </List>
+                  <Typography variant="h4">Ogłoszenia</Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={12} md={6} xl={6}>
               <Card sx={{ borderRadius: 5, boxShadow: 0, height: "89vh" }}>
                 <CardContent>
-                  <Typography ml={1} variant="h4">
-                    Ten Tydzień
-                  </Typography>
+                  <Typography variant="h4">Ten Tydzień</Typography>
                 </CardContent>
               </Card>
             </Grid>
