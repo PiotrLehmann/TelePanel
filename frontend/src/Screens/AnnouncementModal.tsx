@@ -41,10 +41,10 @@ const GroupChatModal: React.FC = ({ children }) => {
         },
       };
       const { data } = await axios.post(
-        "/api/message",
+        "http://localhost:5000/api/announcement",
         {
           title: title,
-          announcement: text,
+          announcementText: text,
           // user: xxx, //to do
         },
         config
