@@ -71,23 +71,13 @@ function App() {
   //const [postList, setPostList] = useState([]);
 
   const fetchDummy = async () => {
-    //const data = await axios.get("http://127.0.0.1:5000/api/dummy");
-    //console.log(data);
+    const data = await axios.get("http://127.0.0.1:5000/api/dummy");
+    console.log(data);
   };
 
   useEffect(() => {
     fetchDummy();
   }, []);
-
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // const handleOpenModal = () => {
-  //   setIsModalOpen(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setIsModalOpen(false);
-  // };
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
