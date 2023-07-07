@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import AddIcon from "@mui/icons-material/Add";
 import CssBaseline from "@mui/material/CssBaseline";
 import Telepanel from "../components/Telepanel/Telepanel";
 import Clock from "../components/Telepanel/Clock";
@@ -27,6 +28,7 @@ import { orange } from "@mui/material/colors";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import AnnouncementModal from './AnnouncementModal';
 
 const themeDark = createTheme({
   palette: {
@@ -76,6 +78,16 @@ function App() {
   useEffect(() => {
     fetchDummy();
   }, []);
+
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // const handleOpenModal = () => {
+  //   setIsModalOpen(true);
+  // };
+
+  // const handleCloseModal = () => {
+  //   setIsModalOpen(false);
+  // };
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
@@ -197,11 +209,22 @@ function App() {
                 }}
               >
                 <CardContent>
-                  <Box ml={1} mb={2} display="flex" alignItems="center">
+                  <Box
+                    ml={1}
+                    mb={2}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
                     <MailOutlineIcon fontSize="large" color="primary" />
                     <Typography ml={1} variant="h4">
                       Ogłoszenia
                     </Typography>
+                    <AnnouncementModal>
+                      <Button color="primary">
+                        <AddIcon />
+                      </Button>
+                    </AnnouncementModal>
                   </Box>
                   <List
                     sx={{
