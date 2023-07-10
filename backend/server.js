@@ -23,7 +23,6 @@ app.get('/api/walls', (req, res) => {
 });
 
 app.get('/api/wall/:id', (req, res) => {
-    console.log(req.params.id);
     const singleWall = walls.find((w) => w._id === req.params.id);
     res.send(singleWall);
 });
