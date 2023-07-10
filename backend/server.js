@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const dummy = require('./dummydata/dummydata');
+const walls = require('./dummydata/dummydata');
 const cors = require("cors");
 const connectDB = require('./config/db');
 const announcementRoutes = require('./routes/announcementRoutes');
@@ -18,8 +18,14 @@ app.get('/', (req, res) => {
 
 app.use('/api/announcement', announcementRoutes);
 
-app.get('/api/dummy', (req, res) => {
-    res.send(dummy);
+app.get('/api/walls', (req, res) => {
+    res.send(walls);
+});
+
+app.get('/api/wall/:id', (req, res) => {
+    console.log(req.params.id);
+    const singleWall = walls.find((w) => w._id === req.params.id);
+    res.send(singleWall);
 });
 
 const PORT = process.env.PORT || 5000;
