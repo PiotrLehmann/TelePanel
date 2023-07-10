@@ -12,7 +12,7 @@ const sendAnnouncement = asyncHandler(async (req, res) => {
     var newAnnouncement = {
         // author: "creator",
         title: title,
-        announcement: announcementText,
+        announcementText: announcementText,
     }
 
     try {
