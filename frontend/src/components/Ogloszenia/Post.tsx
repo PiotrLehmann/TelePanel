@@ -9,11 +9,24 @@ type PostProps = {
 
 const Post = ({ title, user, data, text }: PostProps) => {
   return (
-    <Box p={2} borderBottom={1} borderColor={"primary.main"} width="90%" mb={3}>
-      <Typography variant="h5" textAlign="center" mb={0.5}>
+    <Box
+      bgcolor={"primary.main"}
+      p={2}
+      borderRadius={5}
+      borderColor={"primary.main"}
+      width="90%"
+      mb={3}
+      color={"background.paper"}
+    >
+      <Typography fontWeight="bold" variant="h5" textAlign="center">
         {title}
       </Typography>
-      <Typography mb={1} fontStyle="italic" variant="subtitle2">
+      <Typography
+        mb={1}
+        textAlign="center"
+        fontStyle="italic"
+        variant="subtitle2"
+      >
         {user} - {data}
       </Typography>
       <Typography variant="body2">{text}</Typography>

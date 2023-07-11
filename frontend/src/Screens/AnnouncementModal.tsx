@@ -1,23 +1,23 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button,
-  useDisclosure,
+  //   ModalOverlay,
+  //   ModalContent,
+  //   ModalHeader,
+  //   ModalFooter,
+  //   ModalBody,
+  //   ModalCloseButton,
+  //   Button,
+  //   useDisclosure,
   useToast,
-  FormControl,
-  Input,
-  Box,
+  //   FormControl,
+  //   Input,
+  //   Box,
 } from "@chakra-ui/react";
+import { Box, Fade, Modal, FormControl, Input, Button } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 
 const GroupChatModal: React.FC = ({ children }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const toast = useToast();
@@ -29,7 +29,6 @@ const GroupChatModal: React.FC = ({ children }) => {
   const typingHandlerText = (e) => {
     setText(e.target.value);
     //console.log(text);
-    
   };
 
   const addAnnouncement = async () => {
@@ -63,45 +62,41 @@ const GroupChatModal: React.FC = ({ children }) => {
     }
   };
 
+  const style = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "background.default",
+    borderRadius: 5,
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
-      <span onClick={onOpen}>{children}</span>
-
-      <Modal onClose={onClose} isOpen={isOpen} isCentered>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader
-            fontSize="35px"
-            fontFamily="Work sans"
-            display="flex"
-            justifyContent="center"
-          >
-            Adding an announcement
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody display="flex" flexDir="column" alignItems="center">
+      <span onClick={handleOpen}>{children}</span>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Fade in={open}>
+          <Box sx={style} width={{ xl: "40vw", sm: "90vw" }}>
             <FormControl>
-              <Input
-                placeholder="Title..."
-                mb={3}
-                onChange={typingHandlerTitle}
-              />
+              <Input placeholder="Title..." onChange={typingHandlerTitle} />
             </FormControl>
             <FormControl>
-              <Input
-                placeholder="Text..."
-                mb={1}
-                onChange={typingHandlerText}
-              />
+              <Input placeholder="Text..." onChange={typingHandlerText} />
             </FormControl>
-            <Box w="100%" display="flex" flexWrap="wrap"></Box>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" onClick={addAnnouncement}>
-              Add
-            </Button>
-          </ModalFooter>
-        </ModalContent>
+            <Button onClick={addAnnouncement}>Add</Button>
+          </Box>
+        </Fade>
       </Modal>
     </>
   );
