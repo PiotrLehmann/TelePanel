@@ -5,6 +5,7 @@ const cors = require("cors");
 const connectDB = require('./config/db');
 const announcementRoutes = require('./routes/announcementRoutes');
 const userRoutes = require('./routes/userRoutes');
+const wallRoutes = require('./routes/wallRoutes');
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 
 const app = express();
