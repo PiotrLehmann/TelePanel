@@ -27,6 +27,7 @@ import { orange } from "@mui/material/colors";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import Materialy from "../components/Materialy";
 
 const themeDark = createTheme({
   palette: {
@@ -49,14 +50,14 @@ const themeDark = createTheme({
 const themeLight = createTheme({
   palette: {
     background: {
-      default: "#E0E0E0",
+      default: "#EDEBE9",
       paper: "#F5F5F5",
     },
     primary: {
       main: "#E59500",
     },
     text: {
-      primary: "#141414",
+      primary: "#5A5A5A",
     },
   },
   typography: {
@@ -98,7 +99,10 @@ function App() {
                   height: "10vh",
                   display: "flex",
                   borderRadius: 5,
-                  boxShadow: 0,
+                  boxShadow: 3,
+                  ":hover": {
+                    boxShadow: 20,
+                  },
                 }}
               >
                 <CardActions>
@@ -120,7 +124,10 @@ function App() {
                 sx={{
                   height: "20vh",
                   borderRadius: 5,
-                  boxShadow: 0,
+                  boxShadow: 3,
+                  ":hover": {
+                    boxShadow: 20,
+                  },
                 }}
               >
                 <Clock />
@@ -132,7 +139,10 @@ function App() {
                   height: "20vh",
                   borderRadius: 5,
                   p: 2,
-                  boxShadow: 0,
+                  boxShadow: 3,
+                  ":hover": {
+                    boxShadow: 20,
+                  },
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -142,31 +152,21 @@ function App() {
               </Card>
             </Grid>
             <Grid item xs={6} md={6} xl={6}>
+              <Materialy />
+            </Grid>
+            <Grid item xs={6} md={6} xl={6}>
               <Card
                 sx={{
                   height: "20vh",
                   borderRadius: 5,
-                  p: 2,
-                  boxShadow: 0,
+                  boxShadow: 3,
+                  ":hover": {
+                    boxShadow: 20,
+                  },
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              >
-                <CardContent>
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <SaveAltIcon fontSize="large" color="primary" />
-                    <Typography ml={1} variant="h4">
-                      Materiały
-                    </Typography>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={6} md={6} xl={6}>
-              <Card
-                sx={{ height: "20vh", borderRadius: 5, p: 2, boxShadow: 0 }}
               >
                 <CardContent>
                   <Box
@@ -191,7 +191,10 @@ function App() {
               <Card
                 sx={{
                   borderRadius: 5,
-                  boxShadow: 0,
+                  boxShadow: 3,
+                  ":hover": {
+                    boxShadow: 20,
+                  },
                   height: "89vh",
                   overflow: "hidden",
                 }}
@@ -228,7 +231,16 @@ function App() {
               </Card>
             </Grid>
             <Grid item xs={12} md={6} xl={6}>
-              <Card sx={{ borderRadius: 5, boxShadow: 0, height: "89vh" }}>
+              <Card
+                sx={{
+                  borderRadius: 5,
+                  boxShadow: 3,
+                  ":hover": {
+                    boxShadow: 20,
+                  },
+                  height: "89vh",
+                }}
+              >
                 <CardContent>
                   <Typography ml={1} variant="h4">
                     Ten Tydzień
