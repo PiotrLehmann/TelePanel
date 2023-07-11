@@ -5,6 +5,7 @@ import {
   CardActions,
   Button,
   Typography,
+  lighten,
 } from "@mui/material";
 import Clock from "./Clock";
 import Weather from "./Weather";
@@ -25,6 +26,10 @@ const Telepanel = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        boxShadow: 3,
+        ":hover": {
+          boxShadow: 20,
+        },
       }}
     >
       <CardContent>

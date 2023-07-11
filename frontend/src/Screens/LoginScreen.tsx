@@ -47,7 +47,7 @@ const themeLight = createTheme({
       main: "#E59500",
     },
     text: {
-      primary: "#141414",
+      primary: "#5A5A5A",
     },
   },
   typography: {
