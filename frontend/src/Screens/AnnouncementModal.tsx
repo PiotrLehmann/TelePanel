@@ -1,4 +1,3 @@
-import {  useToast} from "@chakra-ui/react";
 import { Box, Fade, Modal, FormControl, Input, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -8,7 +7,6 @@ const GroupChatModal: React.FC = ({ children }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [author, setAuthor] = useState("");
-  const toast = useToast();
 
   const typingHandlerTitle = (e) => {
     setTitle(e.target.value);
@@ -41,22 +39,12 @@ const GroupChatModal: React.FC = ({ children }) => {
           author: author,
           title: title,
           announcementText: text,
-          // user: xxx, //to do
         },
         config
       );
-      console.log("tu nie");
 
-      // setAnnouncements([...announcements, data]); //to do
     } catch (error) {
-      toast({
-        title: "Error Occured!",
-        description: error.message,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
+      
     }
   };
 

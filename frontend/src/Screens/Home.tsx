@@ -32,7 +32,6 @@ import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined
 import AnnouncementModal from "./AnnouncementModal";
 import Materialy from "../components/Materialy";
 import Kalendarz from "../components/Kalendarz";
-import AnnouncementsWall from "../components/AnnouncementsWall";
 
 const themeDark = createTheme({
   palette: {
@@ -99,7 +98,7 @@ function App() {
 
   useEffect(() => {
     fetchAnnouncements();
-  }, []);
+  }, [announcements]);
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
@@ -214,7 +213,6 @@ function App() {
                   </Box>
                   {/* EXPERIMENTAL */}
                   <div className="announcements">
-                    {/* <AnnouncementsWall announcements={announcements}/>  */}
                     <List
                     sx={{
                       overflowY: "scroll",
