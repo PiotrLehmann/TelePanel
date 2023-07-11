@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const announcementSchema = mongoose.Schema({
-    author: {type:mongoose.Schema.Types.ObjectId, ref: "User"},
+    author: {type: String, trim: true},
     title: {type: String, trim: true},
     announcementText: {type: String, trim: true},
     wall: {type: mongoose.Schema.Types.ObjectId, ref: "Wall"},

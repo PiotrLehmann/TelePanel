@@ -13,13 +13,14 @@ import {
   //   Box,
 } from "@chakra-ui/react";
 import { Box, Fade, Modal, FormControl, Input, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const GroupChatModal: React.FC = ({ children }) => {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [author, setAuthor] = useState("");
   const toast = useToast();
 
   const typingHandlerTitle = (e) => {
@@ -31,6 +32,12 @@ const GroupChatModal: React.FC = ({ children }) => {
     //console.log(text);
   };
 
+  useEffect(() => {
+    console.log(localStorage.getItem("email"));
+    setAuthor(localStorage.getItem("name").slice(1, -1));
+  }, [])
+  
+
   const addAnnouncement = async () => {
     try {
       const config = {
@@ -39,21 +46,25 @@ const GroupChatModal: React.FC = ({ children }) => {
           // Authorization: `Bearer ${user.token}`, //to do
         },
       };
+      console.log(author);
+      
       const { data } = await axios.post(
         "http://localhost:5000/api/announcement",
         {
+          author: author,
           title: title,
           announcementText: text,
           // user: xxx, //to do
         },
         config
       );
+      console.log("tu nie");
 
       // setAnnouncements([...announcements, data]); //to do
     } catch (error) {
       toast({
         title: "Error Occured!",
-        description: "Failed to send the announcement",
+        description: error.message,
         status: "error",
         duration: 5000,
         isClosable: true,

@@ -71,21 +71,9 @@ const themeLight = createTheme({
 function App() {
   const [lightTheme, setLightTheme] = useState<boolean>(false);
   //const [postList, setPostList] = useState([]);
-  const [walls, setWalls] = useState([]);
-
-  const fetchDummy = async () => {
-    const data = await axios.get("http://127.0.0.1:5000/api/dummy");
-    console.log(data);
-  };
-
-  const fetchWalls = async() => {
-    const {data} = await axios.get('http://127.0.0.1:5000/api/walls');
-    console.log(data);
-    setWalls(data);
-  }
+  const [announcements, setAnnouncements] = useState([])
 
   useEffect(() => {
-    fetchWalls();
   }, []);
 
   return (
@@ -200,7 +188,7 @@ function App() {
                     </AnnouncementModal>
                   </Box>
                   {/* EXPERIMENTAL */}
-                  <div>{walls.map(wall => <div key={wall._id}>{wall.latestAnnouncement}</div>)}</div> 
+                  {/* <div>{walls.map(wall => <div key={wall._id}>{wall.latestAnnouncement}</div>)}</div>  */}
                   {/* EXPERIMENTAL */}
                   <List
                     sx={{

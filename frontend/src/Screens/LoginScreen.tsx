@@ -84,9 +84,10 @@ const LoginScreen = () => {
         prompt: "select_account",
       });
       console.log(response);
-      console.log(response.account.username);
+      console.log(response.account.name);
 
       setUserEmail(response.account.username);
+      localStorage.setItem("name", JSON.stringify(response.account.name));
       localStorage.setItem("email", JSON.stringify(response.account.username));
       navigate("/");
 
