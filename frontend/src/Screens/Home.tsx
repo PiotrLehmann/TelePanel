@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { ThemeProvider } from "@emotion/react";
 import {
   Box,
@@ -76,11 +76,6 @@ function App() {
 
   const [announcements, setAnnouncements] = useState([]);
 
-  const fetchWalls = async () => {
-    const { data } = await axios.get("http://127.0.0.1:5000/api/walls");
-    console.log(data);
-    setWalls(data);
-
   const fetchAnnouncements = async () => {
     try {
       const { data } = await axios.get(
@@ -88,7 +83,6 @@ function App() {
       );
       await setAnnouncements(data);
       console.log(data);
-      
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -219,27 +213,27 @@ function App() {
                   {/* EXPERIMENTAL */}
                   <div className="announcements">
                     <List
-                    sx={{
-                      overflowY: "scroll",
-                      "&::-webkit-scrollbar": { display: "none" },
-                      height: "75vh",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    {announcements.map((post) => {
-                      return (
-                        <Post
-                          title={post.title}
-                          user={post.author}
-                          // data={post.data}
-                          text={post.announcementText}
-                        />
-                      );
-                    })}
-                  </List> 
-                  </div> 
+                      sx={{
+                        overflowY: "scroll",
+                        "&::-webkit-scrollbar": { display: "none" },
+                        height: "75vh",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      {announcements.map((post) => {
+                        return (
+                          <Post
+                            title={post.title}
+                            user={post.author}
+                            // data={post.data}
+                            text={post.announcementText}
+                          />
+                        );
+                      })}
+                    </List>
+                  </div>
                   {/* EXPERIMENTAL */}
                   {/* <List
                     sx={{
