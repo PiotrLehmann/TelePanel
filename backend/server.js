@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', userRoutes);
+app.use('/api/wall', wallRoutes);
+app.use('/api/announcement', announcementRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

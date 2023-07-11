@@ -1,3 +1,4 @@
+
 import {
   Box,
   Fade,
@@ -12,6 +13,8 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
+import { Box, Fade, Modal, FormControl, Input, Button } from "@mui/material";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
@@ -19,6 +22,7 @@ const GroupChatModal: React.FC = ({ children }: any) => {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [author, setAuthor] = useState("");
 
   const typingHandlerTitle = (e: any) => {
     setTitle(e.target.value);
@@ -58,6 +62,11 @@ const GroupChatModal: React.FC = ({ children }: any) => {
   );
 
   const [message, setMessage] = useState("Dodano ogłoszenie!");
+  useEffect(() => {
+    console.log(localStorage.getItem("email"));
+    setAuthor(localStorage.getItem("name").slice(1, -1));
+  }, [])
+  
 
   const addAnnouncement = async () => {
     try {
@@ -67,12 +76,14 @@ const GroupChatModal: React.FC = ({ children }: any) => {
           // Authorization: `Bearer ${user.token}`, //to do
         },
       };
+      console.log(author);
+      
       const { data } = await axios.post(
         "http://localhost:5000/api/announcement",
         {
+          author: author,
           title: title,
           announcementText: text,
-          // user: xxx, //to do
         },
         config
       );

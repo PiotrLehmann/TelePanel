@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {  useToast } from "@chakra-ui/react";
 import { ThemeProvider } from "@emotion/react";
 import {
   Box,
@@ -71,22 +72,38 @@ const themeLight = createTheme({
 function App() {
   const [lightTheme, setLightTheme] = useState<boolean>(false);
   //const [postList, setPostList] = useState([]);
-  const [walls, setWalls] = useState([]);
+  const toast = useToast();
 
-  const fetchDummy = async () => {
-    const data = await axios.get("http://127.0.0.1:5000/api/dummy");
-    console.log(data);
-  };
+  const [announcements, setAnnouncements] = useState([]);
 
   const fetchWalls = async () => {
     const { data } = await axios.get("http://127.0.0.1:5000/api/walls");
     console.log(data);
     setWalls(data);
+
+  const fetchAnnouncements = async () => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/announcement`
+      );
+      await setAnnouncements(data);
+      console.log(data);
+      
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
   };
 
   useEffect(() => {
-    fetchWalls();
-  }, []);
+    fetchAnnouncements();
+  }, [announcements]);
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
@@ -200,13 +217,31 @@ function App() {
                     </AnnouncementModal>
                   </Box>
                   {/* EXPERIMENTAL */}
-                  <div>
-                    {walls.map((wall) => (
-                      <div key={wall._id}>{wall.latestAnnouncement}</div>
-                    ))}
-                  </div>
+                  <div className="announcements">
+                    <List
+                    sx={{
+                      overflowY: "scroll",
+                      "&::-webkit-scrollbar": { display: "none" },
+                      height: "75vh",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    {announcements.map((post) => {
+                      return (
+                        <Post
+                          title={post.title}
+                          user={post.author}
+                          // data={post.data}
+                          text={post.announcementText}
+                        />
+                      );
+                    })}
+                  </List> 
+                  </div> 
                   {/* EXPERIMENTAL */}
-                  <List
+                  {/* <List
                     sx={{
                       overflowY: "scroll",
                       "&::-webkit-scrollbar": { display: "none" },
@@ -226,7 +261,7 @@ function App() {
                         />
                       );
                     })}
-                  </List>
+                  </List> */}
                 </CardContent>
               </Card>
             </Grid>
