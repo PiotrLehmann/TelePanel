@@ -76,6 +76,11 @@ function App() {
 
   const [announcements, setAnnouncements] = useState([]);
 
+  const fetchWalls = async () => {
+    const { data } = await axios.get("http://127.0.0.1:5000/api/walls");
+    console.log(data);
+    setWalls(data);
+
   const fetchAnnouncements = async () => {
     try {
       const { data } = await axios.get(
@@ -199,7 +204,7 @@ function App() {
                     mb={2}
                     display="flex"
                     alignItems="center"
-                    // justifyContent="space-between"
+                    justifyContent="space-between"
                   >
                     <MailOutlineIcon fontSize="large" color="primary" />
                     <Typography ml={1} variant="h4">
@@ -207,7 +212,7 @@ function App() {
                     </Typography>
                     <AnnouncementModal>
                       <Button color="primary">
-                        <AddIcon />
+                        <AddIcon fontSize="large" />
                       </Button>
                     </AnnouncementModal>
                   </Box>

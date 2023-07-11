@@ -40,7 +40,7 @@ const Kalendarz = () => {
         <CardContent>
           <Box display="flex" alignItems="center" justifyContent="center">
             <CalendarMonthOutlinedIcon fontSize="large" color="primary" />
-            <Typography ml={1} variant="h4">
+            <Typography ml={1} sx={{ fontSize: "170%" }}>
               Kalendarz
             </Typography>
           </Box>
