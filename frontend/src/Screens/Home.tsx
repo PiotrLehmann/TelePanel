@@ -187,7 +187,7 @@ function App() {
                     mb={2}
                     display="flex"
                     alignItems="center"
-                    justifyContent="space-between"
+                    // justifyContent="space-between"
                   >
                     <MailOutlineIcon fontSize="large" color="primary" />
                     <Typography ml={1} variant="h4">
