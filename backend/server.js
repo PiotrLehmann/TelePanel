@@ -5,6 +5,7 @@ const cors = require("cors");
 const connectDB = require('./config/db');
 const announcementRoutes = require('./routes/announcementRoutes');
 const userRoutes = require('./routes/userRoutes');
+const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 
 const app = express();
 app.use(express.json());
@@ -18,6 +19,9 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', userRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.use('/api/announcement', announcementRoutes);
 
