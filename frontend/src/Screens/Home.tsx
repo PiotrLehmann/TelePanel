@@ -28,6 +28,7 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import Materialy from "../components/Materialy";
+import Kalendarz from "../components/Kalendarz";
 
 const themeDark = createTheme({
   palette: {
@@ -155,35 +156,7 @@ function App() {
               <Materialy />
             </Grid>
             <Grid item xs={6} md={6} xl={6}>
-              <Card
-                sx={{
-                  height: "20vh",
-                  borderRadius: 5,
-                  boxShadow: 3,
-                  ":hover": {
-                    boxShadow: 20,
-                  },
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <CardContent>
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <CalendarMonthOutlinedIcon
-                      fontSize="large"
-                      color="primary"
-                    />
-                    <Typography ml={1} variant="h4">
-                      Kalendarz
-                    </Typography>
-                  </Box>
-                </CardContent>
-              </Card>
+              <Kalendarz />
             </Grid>
           </Grid>
           <Grid container item xs={12} md={8} xl={8} spacing={4}>
