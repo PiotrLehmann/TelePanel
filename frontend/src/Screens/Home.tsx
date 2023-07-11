@@ -28,7 +28,7 @@ import { orange } from "@mui/material/colors";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import AnnouncementModal from './AnnouncementModal';
+import AnnouncementModal from "./AnnouncementModal";
 import Materialy from "../components/Materialy";
 import Kalendarz from "../components/Kalendarz";
 
@@ -78,11 +78,11 @@ function App() {
     console.log(data);
   };
 
-  const fetchWalls = async() => {
-    const {data} = await axios.get('http://127.0.0.1:5000/api/walls');
+  const fetchWalls = async () => {
+    const { data } = await axios.get("http://127.0.0.1:5000/api/walls");
     console.log(data);
     setWalls(data);
-  }
+  };
 
   useEffect(() => {
     fetchWalls();
@@ -187,7 +187,7 @@ function App() {
                     mb={2}
                     display="flex"
                     alignItems="center"
-                    // justifyContent="space-between"
+                    justifyContent="space-between"
                   >
                     <MailOutlineIcon fontSize="large" color="primary" />
                     <Typography ml={1} variant="h4">
@@ -195,12 +195,16 @@ function App() {
                     </Typography>
                     <AnnouncementModal>
                       <Button color="primary">
-                        <AddIcon />
+                        <AddIcon fontSize="large" />
                       </Button>
                     </AnnouncementModal>
                   </Box>
                   {/* EXPERIMENTAL */}
-                  <div>{walls.map(wall => <div key={wall._id}>{wall.latestAnnouncement}</div>)}</div> 
+                  <div>
+                    {walls.map((wall) => (
+                      <div key={wall._id}>{wall.latestAnnouncement}</div>
+                    ))}
+                  </div>
                   {/* EXPERIMENTAL */}
                   <List
                     sx={{

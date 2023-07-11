@@ -1,35 +1,63 @@
 import {
-  //   ModalOverlay,
-  //   ModalContent,
-  //   ModalHeader,
-  //   ModalFooter,
-  //   ModalBody,
-  //   ModalCloseButton,
-  //   Button,
-  //   useDisclosure,
-  useToast,
-  //   FormControl,
-  //   Input,
-  //   Box,
-} from "@chakra-ui/react";
-import { Box, Fade, Modal, FormControl, Input, Button } from "@mui/material";
+  Box,
+  Fade,
+  Modal,
+  FormControl,
+  Input,
+  Button,
+  Typography,
+  Snackbar,
+  IconButton,
+  Alert,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import axios from "axios";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
-const GroupChatModal: React.FC = ({ children }) => {
+const GroupChatModal: React.FC = ({ children }: any) => {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const toast = useToast();
 
-  const typingHandlerTitle = (e) => {
+  const typingHandlerTitle = (e: any) => {
     setTitle(e.target.value);
   };
 
-  const typingHandlerText = (e) => {
+  const typingHandlerText = (e: any) => {
     setText(e.target.value);
     //console.log(text);
   };
+
+  const [toastOpen, setToastOpen] = useState(false);
+  const handleToast = () => {
+    setToastOpen(true);
+  };
+  const handleToastClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setToastOpen(false);
+  };
+
+  const action = (
+    <>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleToastClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </>
+  );
+
+  const [message, setMessage] = useState("Dodano ogłoszenie!");
 
   const addAnnouncement = async () => {
     try {
@@ -49,16 +77,12 @@ const GroupChatModal: React.FC = ({ children }) => {
         config
       );
 
+      setMessage("Dodano ogłoszenie!");
+      handleToast();
       // setAnnouncements([...announcements, data]); //to do
     } catch (error) {
-      toast({
-        title: "Error Occured!",
-        description: "Failed to send the announcement",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
+      setMessage("Wystąpił błąd!");
+      handleToast();
     }
   };
 
@@ -79,6 +103,20 @@ const GroupChatModal: React.FC = ({ children }) => {
 
   return (
     <>
+      <Snackbar
+        open={toastOpen}
+        autoHideDuration={3000}
+        onClose={handleToastClose}
+        message={message}
+        action={action}
+      >
+        <Alert
+          onClose={handleToastClose}
+          severity={message == "Dodano ogłoszenie!" ? "success" : "error"}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
       <span onClick={handleOpen}>{children}</span>
       <Modal
         open={open}
@@ -88,13 +126,33 @@ const GroupChatModal: React.FC = ({ children }) => {
       >
         <Fade in={open}>
           <Box sx={style} width={{ xl: "40vw", sm: "90vw" }}>
-            <FormControl>
-              <Input placeholder="Title..." onChange={typingHandlerTitle} />
+            <Box
+              mb={3}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <MailOutlineIcon fontSize="large" color="primary" />
+              <Typography ml={1} variant="h4">
+                Dodaj ogłoszenie
+              </Typography>
+            </Box>
+            <FormControl fullWidth={true}>
+              <Input
+                placeholder="Title..."
+                onChange={typingHandlerTitle}
+                sx={{ marginBottom: 2 }}
+              />
+              <Input
+                placeholder="Text..."
+                onChange={typingHandlerText}
+                multiline={true}
+                sx={{ marginBottom: 2 }}
+              />
+              <Button variant="contained" onClick={addAnnouncement}>
+                Dodaj
+              </Button>
             </FormControl>
-            <FormControl>
-              <Input placeholder="Text..." onChange={typingHandlerText} />
-            </FormControl>
-            <Button onClick={addAnnouncement}>Add</Button>
           </Box>
         </Fade>
       </Modal>
