@@ -1,0 +1,4 @@
+Do main.tsx tam gdzie loginScreen to trzeba dać App
+
+Oracle:
+WNec9GlNgydclbC@

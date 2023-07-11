@@ -15,6 +15,9 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import CssBaseline from "@mui/material/CssBaseline";
 import azure from "../assets/images/azure.png";
+import config from "../Config";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { useNavigate } from "react-router-dom";
 
 const themeDark = createTheme({
   palette: {
@@ -55,6 +58,50 @@ const themeLight = createTheme({
 const LoginScreen = () => {
   const [lightTheme, setLightTheme] = useState<boolean>(false);
 
+  const [error, setError] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
+  const [userEmail, setUserEmail] = useState({});
+  const navigate = useNavigate();
+
+  // Initialize the MSAL app object
+  const publicClientApplication = new PublicClientApplication({
+    auth: {
+      clientId: config.appId,
+      redirectUri: config.redirectUrl,
+    },
+    cache: {
+      cacheLocation: "sessionStorage",
+      storeAuthStateInCookie: true,
+    },
+  });
+
+  const login = async () => {
+    try {
+      // Login via popup
+      const response = await publicClientApplication.loginPopup({
+        scopes: config.scopes,
+        prompt: "select_account",
+      });
+      console.log(response);
+      console.log(response.account.username);
+
+      setUserEmail(response.account.username);
+      localStorage.setItem("email", JSON.stringify(response.account.username));
+      navigate("/");
+
+      setIsAuthenticated(true);
+    } catch (err) {
+      setIsAuthenticated(false);
+      setUser({});
+      setError(err);
+    }
+  };
+
+  const logout = () => {
+    publicClientApplication.logout();
+  };
+
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
       <CssBaseline />
@@ -85,11 +132,19 @@ const LoginScreen = () => {
             sx={{ height: 100, width: 200, ml: 1 }}
             color="primary"
             variant="outlined"
+            onClick={() => login()}
           >
             <img src={azure} />
           </Button>
         </Box>
-        <Typography marginTop={4}>Zaloguj się poprzez konto AGH</Typography>
+        {isAuthenticated ? (
+          <>
+            <Typography marginTop={4}>Poprawnie zalogowano!</Typography>
+            <Typography marginTop={4}>Tfuj email: {userEmail}</Typography>
+          </>
+        ) : (
+          <Typography marginTop={4}>Zaloguj się poprzez konto AGH</Typography>
+        )}
       </Container>
     </ThemeProvider>
   );

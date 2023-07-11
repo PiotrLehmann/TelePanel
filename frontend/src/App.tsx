@@ -1,3 +1,10 @@
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginScreen from "./Screens/LoginScreen";
+import Home from "./Screens/Home";
+
+const App = () => {
+=======
 import { useState } from "react";
 import { ThemeProvider } from "@emotion/react";
 import {
@@ -77,119 +84,14 @@ function App() {
   const postList = data["Post List"];
 
 
-
   return (
-    <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
-      <CssBaseline />
-      <Container maxWidth={false} disableGutters sx={{ paddingX: 4 }}>
-        <Grid
-          container
-          spacing={4}
-          sx={{ minHeight: "100vh" }}
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Grid item container spacing={3} xs={12} md={4} xl={4}>
-            <Grid item xs={12} md={12} xl={12}>
-              <Telepanel />
-            </Grid>
-            <Grid item xs={12} md={12} xl={12}>
-              <Card
-                sx={{
-                  height: "10vh",
-                  display: "flex",
-                  borderRadius: 5,
-                  boxShadow: 0,
-                }}
-              >
-                <CardActions>
-                  <Button
-                    color="primary"
-                    onClick={() => setLightTheme(!lightTheme)}
-                  >
-                    {lightTheme ? (
-                      <DarkModeOutlinedIcon />
-                    ) : (
-                      <LightModeOutlinedIcon />
-                    )}
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-            <Grid item xs={8} md={8} xl={8}>
-              <Card
-                sx={{
-                  height: "20vh",
-                  borderRadius: 5,
-                  boxShadow: 0,
-                }}
-              >
-                <Clock />
-              </Card>
-            </Grid>
-            <Grid item xs={4} md={4} xl={4}>
-              <Card
-                sx={{
-                  height: "20vh",
-                  borderRadius: 5,
-                  p: 2,
-                  boxShadow: 0,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Weather />
-              </Card>
-            </Grid>
-            <Grid item xs={6} md={6} xl={6}>
-              <Card
-                sx={{
-                  height: "20vh",
-                  borderRadius: 5,
-                  p: 2,
-                  boxShadow: 0,
-                }}
-              >
-                <CardContent>
-                  <Typography variant="h4">Materiały</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={6} md={6} xl={6}>
-              <Card
-                sx={{ height: "20vh", borderRadius: 5, p: 2, boxShadow: 0 }}
-              >
-                <CardContent>
-                  <Typography variant="h4">Kalendarz</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-          <Grid container item xs={12} md={8} xl={8} spacing={4}>
-            <Grid item xs={12} md={6} xl={6}>
-              <Card sx={{ borderRadius: 5, boxShadow: 0, height: "89vh" }}>
-                <CardContent>
-                  <Typography ml={1} variant="h4">
-                    Ogłoszenia
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={6} xl={6}>
-              <Card sx={{ borderRadius: 5, boxShadow: 0, height: "89vh" }}>
-                <CardContent>
-                  <Typography ml={1} variant="h4">
-                    Ten Tydzień
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Container>
-    </ThemeProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
