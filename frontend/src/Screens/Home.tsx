@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import AddIcon from "@mui/icons-material/Add";
 import CssBaseline from "@mui/material/CssBaseline";
 import Telepanel from "../components/Telepanel/Telepanel";
 import Clock from "../components/Telepanel/Clock";
@@ -27,6 +28,7 @@ import { orange } from "@mui/material/colors";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import AnnouncementModal from './AnnouncementModal';
 import Materialy from "../components/Materialy";
 import Kalendarz from "../components/Kalendarz";
 
@@ -69,14 +71,21 @@ const themeLight = createTheme({
 function App() {
   const [lightTheme, setLightTheme] = useState<boolean>(false);
   //const [postList, setPostList] = useState([]);
+  const [walls, setWalls] = useState([]);
 
   const fetchDummy = async () => {
-    //const data = await axios.get("http://127.0.0.1:5000/api/dummy");
-    //console.log(data);
+    const data = await axios.get("http://127.0.0.1:5000/api/dummy");
+    console.log(data);
   };
 
+  const fetchWalls = async() => {
+    const {data} = await axios.get('http://127.0.0.1:5000/api/walls');
+    console.log(data);
+    setWalls(data);
+  }
+
   useEffect(() => {
-    fetchDummy();
+    fetchWalls();
   }, []);
 
   return (
@@ -173,12 +182,26 @@ function App() {
                 }}
               >
                 <CardContent>
-                  <Box ml={1} mb={2} display="flex" alignItems="center">
+                  <Box
+                    ml={1}
+                    mb={2}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
                     <MailOutlineIcon fontSize="large" color="primary" />
                     <Typography ml={1} variant="h4">
                       Ogłoszenia
                     </Typography>
+                    <AnnouncementModal>
+                      <Button color="primary">
+                        <AddIcon />
+                      </Button>
+                    </AnnouncementModal>
                   </Box>
+                  {/* EXPERIMENTAL */}
+                  <div>{walls.map(wall => <div key={wall._id}>{wall.latestAnnouncement}</div>)}</div> 
+                  {/* EXPERIMENTAL */}
                   <List
                     sx={{
                       overflowY: "scroll",
