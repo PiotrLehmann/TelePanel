@@ -32,6 +32,9 @@ import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined
 import AnnouncementModal from "./AnnouncementModal";
 import Materialy from "../components/Materialy";
 import Kalendarz from "../components/Kalendarz";
+import config from "../Config";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { useNavigate } from "react-router-dom";
 
 const themeDark = createTheme({
   palette: {
@@ -98,6 +101,24 @@ function App() {
   useEffect(() => {
     fetchAnnouncements();
   }, [announcements]);
+
+  const publicClientApplication = new PublicClientApplication({
+    auth: {
+      clientId: config.appId,
+      redirectUri: config.redirectUrl,
+    },
+    cache: {
+      cacheLocation: "sessionStorage",
+      storeAuthStateInCookie: true,
+    },
+  });
+
+  const navigate = useNavigate();
+  
+  const logoutHandler = () => {
+    publicClientApplication.logout();
+    navigate("/login");
+  };
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
@@ -274,6 +295,9 @@ function App() {
                   <Typography ml={1} variant="h4">
                     Ten Tydzień
                   </Typography>
+                  <Button onClick={logoutHandler}>
+                    <AddIcon fontSize="large" />
+                  </Button>
                 </CardContent>
               </Card>
             </Grid>
