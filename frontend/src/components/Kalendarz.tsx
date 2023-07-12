@@ -9,6 +9,7 @@ import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
+import axios from "axios";
 
 
 const Kalendarz = () => {
@@ -34,7 +35,11 @@ const Kalendarz = () => {
   const [value, setValue] = useState<any | null>(null);
   
   function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDays?: number[] }) {
+    
     const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
+
+    console.log(highlightedDays);
+    
   
     const isSelected =
       !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) >= 0;
@@ -53,12 +58,11 @@ const Kalendarz = () => {
 
     const requestAbortController = useRef<AbortController | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [highlightedDays, setHighlightedDays] = useState([1, 2, 15]);
+    const [highlightedDays, setHighlightedDays] = useState([]);
   
     const fetchHighlightedDays = (date: Dayjs) => {
       const controller = new AbortController();
       try{
-          setHighlightedDays([1,5,9]);
           setIsLoading(false);
       } catch(error: any){
           console.log(error);          
@@ -73,29 +77,70 @@ const Kalendarz = () => {
       return () => requestAbortController.current?.abort();
     }, []);
   
-    const handleMonthChange = (date: Dayjs) => {
+  const [events, setEvents] = useState([]);
+
+  const fetchEvents = async () => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/calendar`
+      );
+      await setEvents(data);
+      console.log(data);
+    } catch (error) {
+      // toast({  TU DODAC SNACKBARA !!!!!!!!!!!!!!!!!!
+      //   title: "Error Occured!",
+      //   description: error.message,
+      //   status: "error",
+      //   duration: 5000,
+      //   isClosable: true,
+      //   position: "bottom",
+      // });
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  
+    const handleMonthChange = (currentDate: Dayjs) => {
       if (requestAbortController.current) {
-        // make sure that you are aborting useless requests
-        // because it is possible to switch between months pretty quickly
         requestAbortController.current.abort();
       }
       
-      setSelectedMonth(date);
-      setIsLoading(true);
+      setSelectedMonth(currentDate); // nie miesiac to ale zaraz
       setHighlightedDays([]);
-      fetchHighlightedDays(date);
+      setIsLoading(true);
+      fetchEvents();
+      let currentMarks = [];
+      try {
+        events.map((day) => {
+          if ( ( dayjs(day.date).year() == selectedMonth.year() ) && ( dayjs(day.date).month()   === selectedMonth.month() ) ) {
+            currentMarks.push(dayjs(day.date).date())
+          }
+        })
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      } 
+      setHighlightedDays(currentMarks);
+      setIsLoading(false);
     };
 
-    const handleDayChange = (date: Dayjs) => {
-      if (requestAbortController.current) {
-        // make sure that you are aborting useless requests
-        // because it is possible to switch between months pretty quickly
-        requestAbortController.current.abort();
-      }
+    useEffect(() => {
+      handleMonthChange();
+    }, []);
+
+    // const handleDayChange = (date: Dayjs) => {
+    //   if (requestAbortController.current) {
+    //     // make sure that you are aborting useless requests
+    //     // because it is possible to switch between months pretty quickly
+    //     requestAbortController.current.abort();
+    //   }
       
-      setSelectedMonth(date);
-      setIsLoading(true);
-    };
+    //   setSelectedMonth(date);
+    //   setIsLoading(true);
+    // };
 
   return (
     <>
