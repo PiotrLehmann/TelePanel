@@ -30,6 +30,9 @@ const Kalendarz = () => {
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<Dayjs | null>(null);
+
+  const [value, setValue] = useState<any | null>(null);
+
   console.log(selectedDate);
 
   function fakeFetch(date: Dayjs, { signal }: { signal: AbortSignal }) {
@@ -159,7 +162,10 @@ const Kalendarz = () => {
               orientation="landscape" 
               defaultValue={dayjs()} 
               loading={isLoading}
-              onChange={handleDayChange}
+
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
               onMonthChange={handleMonthChange}
               renderLoading={() => <DayCalendarSkeleton />}
               slots={{
@@ -172,9 +178,11 @@ const Kalendarz = () => {
               }} />
             </LocalizationProvider>
           <Box  width={{ xl: "10vw", sm: "10vw" }} >
-            { selectedMonth?.year() };
-            { selectedMonth?.month() };
-            { selectedMonth?.day() };
+            { value?.year() };
+            { value?.month() };
+            { value?.date() };
+            {console.log(value)};
+            
           </Box>
           </Box>
         </Fade>
