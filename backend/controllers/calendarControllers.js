@@ -1,38 +1,39 @@
 const asyncHandler = require("express-async-handler");
 const CalendarEvent = require('../models/eventModel')
 
-const addEvent = asyncHandler(async (req, res) => {
-    const {author, title, announcementText} = req.body;
+const sendEvent = asyncHandler(async (req, res) => {
+    const {author, title, eventText, date} = req.body;
     console.log(req.body);
     if (!title || !announcementText) {
         console.log("Invalid data passed into request");
         return res.sendStatus(400);
     }
 
-    var newAnnouncement = {
+    var newEvent = {
         author: author, 
         title: title,
-        announcementText: announcementText,
+        eventText: eventText,
+        date: date,
     }
 
     try {
-        var announcement = await CalendarEvent.create(newAnnouncement);
+        var event = await CalendarEvent.create(newEvent);
         // announcement = await announcement.populate("author", "name email"); //doesn't work
-        res.json(announcement);
+        res.json(event);
     } catch (error) {
         res.status(400);
         throw new Error(error.message);
     }
 });
 
-const getAnnouncements = asyncHandler(async (req, res) => {
+const getEvents = asyncHandler(async (req, res) => {
     try {
-        const announcements = await CalendarEvent.find({}); //.populate("author", "name email"); doesn't work
-        res.json(announcements);
+        const events = await CalendarEvent.find({}); //.populate("author", "name email"); doesn't work
+        res.json(events);
     } catch (error) {
         res.status(400);
         throw new Error(error.message);
     }
 });
 
-module.exports = {sendAnnouncement, getAnnouncements};
+module.exports = {sendEvent, getEvents};

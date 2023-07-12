@@ -32,26 +32,6 @@ const Kalendarz = () => {
   const [selectedMonth, setSelectedMonth] = useState<Dayjs | null>(null);
 
   const [value, setValue] = useState<any | null>(null);
-
-  console.log(selectedDate);
-
-  function fakeFetch(date: Dayjs, { signal }: { signal: AbortSignal }) {
-    return new Promise<{ daysToHighlight: number[] }>((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        const daysInMonth = date.daysInMonth();
-        console.log(date.month());
-        
-        const daysToHighlight = [1, 2, 3];
-  
-        resolve({ daysToHighlight });
-      }, 500);
-  
-      signal.onabort = () => {
-        clearTimeout(timeout);
-        reject(new DOMException('aborted', 'AbortError'));
-      };
-    });
-  }
   
   function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDays?: number[] }) {
     const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
@@ -77,19 +57,12 @@ const Kalendarz = () => {
   
     const fetchHighlightedDays = (date: Dayjs) => {
       const controller = new AbortController();
-      fakeFetch(date, {
-        signal: controller.signal,
-      })
-        .then(({ daysToHighlight }) => {
-          setHighlightedDays(daysToHighlight);
+      try{
+          setHighlightedDays([1,5,9]);
           setIsLoading(false);
-        })
-        .catch((error) => {
-          // ignore the error if it's caused by `controller.abort`
-          if (error.name !== 'AbortError') {
-            throw error;
-          }
-        });
+      } catch(error: any){
+          console.log(error);          
+        };
   
       requestAbortController.current = controller;
     };
@@ -181,7 +154,10 @@ const Kalendarz = () => {
             { value?.year() };
             { value?.month() };
             { value?.date() };
-            {console.log(value)};
+            -----------------,,,
+            {value?.format()};
+            ____________________
+            {dayjs('2018-07-18T21:17:02+02:00').format() /* zwaraca to samo */ } 
             
           </Box>
           </Box>

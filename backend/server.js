@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 const announcementRoutes = require('./routes/announcementRoutes');
 const userRoutes = require('./routes/userRoutes');
 const wallRoutes = require('./routes/wallRoutes');
+const calendarRoutes = require('./routes/calendarEventRoutes')
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 
 const app = express();
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRoutes);
 app.use('/api/wall', wallRoutes);
 app.use('/api/announcement', announcementRoutes);
+app.use('/api/calendar', calendarRoutes)
 
 app.use(notFound);
 app.use(errorHandler);
