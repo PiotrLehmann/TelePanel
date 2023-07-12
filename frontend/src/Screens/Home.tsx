@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useToast } from "@chakra-ui/react";
+import { Circle, useToast } from "@chakra-ui/react";
 import { ThemeProvider } from "@emotion/react";
 import {
   Box,
@@ -13,6 +13,9 @@ import {
   Button,
   Paper,
   List,
+  Modal,
+  Fade,
+  Avatar,
 } from "@mui/material";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -23,15 +26,13 @@ import Clock from "../components/Telepanel/Clock";
 import Weather from "../components/Telepanel/Weather";
 import axios from "axios";
 import { useEffect } from "react";
-import data from "../jsonExamples/PostList.json";
 import Post from "../components/Ogloszenia/Post";
-import { orange } from "@mui/material/colors";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import SaveAltIcon from "@mui/icons-material/SaveAlt";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import AnnouncementModal from "./AnnouncementModal";
 import Materialy from "../components/Materialy";
 import Kalendarz from "../components/Kalendarz";
+import PersonIcon from "@mui/icons-material/Person";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const themeDark = createTheme({
   palette: {
@@ -99,6 +100,21 @@ function App() {
     fetchAnnouncements();
   }, [announcements]);
 
+  const [openProfile, setOpenProfile] = useState(false);
+  const handleOpenProfile = () => setOpenProfile(true);
+  const handleCloseProfile = () => setOpenProfile(false);
+
+  const style = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "background.default",
+    borderRadius: 5,
+    boxShadow: 24,
+    p: 4,
+  };
+
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
       <CssBaseline />
@@ -130,15 +146,64 @@ function App() {
                   <Button
                     color="primary"
                     onClick={() => setLightTheme(!lightTheme)}
+                    sx={{ height: "100%", borderRadius: 5 }}
                   >
                     {lightTheme ? (
-                      <DarkModeOutlinedIcon />
+                      <DarkModeOutlinedIcon fontSize="medium" />
                     ) : (
-                      <LightModeOutlinedIcon />
+                      <LightModeOutlinedIcon fontSize="medium" />
                     )}
+                  </Button>
+                  <Button
+                    onClick={handleOpenProfile}
+                    sx={{ height: "100%", borderRadius: 5 }}
+                  >
+                    <PersonIcon fontSize="medium" />
+                  </Button>
+                  <Button sx={{ height: "100%", borderRadius: 5 }}>
+                    <LogoutIcon fontSize="medium" />
                   </Button>
                 </CardActions>
               </Card>
+              <Modal
+                open={openProfile}
+                onClose={handleCloseProfile}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Fade in={openProfile}>
+                  <Box sx={style}>
+                    <Box
+                      mb={3}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      flexDirection="column"
+                    >
+                      <Avatar
+                        sx={{
+                          fontSize: "3rem",
+                          height: "5rem",
+                          width: "5rem",
+                          mb: 2,
+                        }}
+                      >
+                        {localStorage.getItem("name")?.charAt(1)}
+                      </Avatar>
+                      <Typography ml={1} variant="h6">
+                        {localStorage
+                          .getItem("name")
+                          ?.slice(1, self.length - 1)}
+                      </Typography>
+                      <Typography ml={1} variant="body2">
+                        {localStorage
+                          .getItem("email")
+                          ?.slice(1, self.length - 1)}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Fade>
+              </Modal>
             </Grid>
             <Grid item xs={8} md={8} xl={8}>
               <Card

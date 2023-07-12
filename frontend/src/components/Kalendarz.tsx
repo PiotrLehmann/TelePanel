@@ -53,7 +53,7 @@ const Kalendarz = () => {
         aria-describedby="modal-modal-description"
       >
         <Fade in={open}>
-          <Box sx={style} width={{ xl: "40vw", sm: "90vw" }}>
+          <Box sx={style}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateCalendar />
             </LocalizationProvider>

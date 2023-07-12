@@ -29,7 +29,7 @@ const Post = ({ title, user, text }: PostProps) => {
         fontStyle="italic"
         variant="subtitle2"
       >
-        {user}
+        ~ {user}
       </Typography>
       <Typography variant="body2">{text}</Typography>
     </Box>
