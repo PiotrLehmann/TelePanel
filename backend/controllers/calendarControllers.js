@@ -4,7 +4,7 @@ const CalendarEvent = require('../models/eventModel')
 const sendEvent = asyncHandler(async (req, res) => {
     const {author, title, eventText, date} = req.body;
     console.log(req.body);
-    if (!title || !announcementText) {
+    if (!title || !eventText) {
         console.log("Invalid data passed into request");
         return res.sendStatus(400);
     }
