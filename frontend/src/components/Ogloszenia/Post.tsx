@@ -7,7 +7,9 @@ type PostProps = {
   text: string;
 };
 
-const Post = ({ title, user, data, text }: PostProps) => {
+let date = new Date();
+
+const Post = ({ title, user, text }: PostProps) => {
   return (
     <Box
       bgcolor={"primary.main"}
@@ -27,7 +29,7 @@ const Post = ({ title, user, data, text }: PostProps) => {
         fontStyle="italic"
         variant="subtitle2"
       >
-        {user} - {data}
+        {user}
       </Typography>
       <Typography variant="body2">{text}</Typography>
     </Box>

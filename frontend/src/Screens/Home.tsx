@@ -222,16 +222,18 @@ function App() {
                         alignItems: "center",
                       }}
                     >
-                      {announcements.map((post) => {
-                        return (
-                          <Post
-                            title={post.title}
-                            user={post.author}
-                            // data={post.data}
-                            text={post.announcementText}
-                          />
-                        );
-                      })}
+                      {announcements
+                        .slice(0)
+                        .reverse()
+                        .map((post) => {
+                          return (
+                            <Post
+                              title={post.title}
+                              user={post.author}
+                              text={post.announcementText}
+                            />
+                          );
+                        })}
                     </List>
                   </div>
                   {/* EXPERIMENTAL */}

@@ -1,4 +1,3 @@
-
 import {
   Box,
   Fade,
@@ -63,8 +62,7 @@ const GroupChatModal: React.FC = ({ children }: any) => {
   useEffect(() => {
     console.log(localStorage.getItem("email"));
     setAuthor(localStorage.getItem("name").slice(1, -1));
-  }, [])
-  
+  }, []);
 
   const addAnnouncement = async () => {
     try {
@@ -75,7 +73,7 @@ const GroupChatModal: React.FC = ({ children }: any) => {
         },
       };
       console.log(author);
-      
+
       const { data } = await axios.post(
         "http://localhost:5000/api/announcement",
         {
@@ -158,7 +156,13 @@ const GroupChatModal: React.FC = ({ children }: any) => {
                 multiline={true}
                 sx={{ marginBottom: 2 }}
               />
-              <Button variant="contained" onClick={addAnnouncement}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  addAnnouncement();
+                  handleClose();
+                }}
+              >
                 Dodaj
               </Button>
             </FormControl>
