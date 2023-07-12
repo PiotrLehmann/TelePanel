@@ -60,22 +60,6 @@ const Kalendarz = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [highlightedDays, setHighlightedDays] = useState([]);
   
-    const fetchHighlightedDays = (date: Dayjs) => {
-      const controller = new AbortController();
-      try{
-          setIsLoading(false);
-      } catch(error: any){
-          console.log(error);          
-        };
-  
-      requestAbortController.current = controller;
-    };
-  
-    useEffect(() => {
-      fetchHighlightedDays(dayjs());
-      // abort request on unmount
-      return () => requestAbortController.current?.abort();
-    }, []);
   
   const [events, setEvents] = useState([]);
 
