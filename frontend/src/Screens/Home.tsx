@@ -98,7 +98,7 @@ function App() {
 
   useEffect(() => {
     fetchAnnouncements();
-  }, [announcements]);
+  }, []);
 
   const [openProfile, setOpenProfile] = useState(false);
   const handleOpenProfile = () => setOpenProfile(true);
