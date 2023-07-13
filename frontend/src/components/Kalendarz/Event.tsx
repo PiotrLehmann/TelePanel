@@ -7,9 +7,7 @@ type PostProps = {
   text: string;
 };
 
-let date = new Date();
-
-const Post = ({ title, user, text }: PostProps) => {
+const Event = ({ title, user, data, text }: PostProps) => {
   return (
     <Box
       bgcolor={"primary.main"}
@@ -29,11 +27,11 @@ const Post = ({ title, user, text }: PostProps) => {
         fontStyle="italic"
         variant="subtitle2"
       >
-        ~ {user}
+        {user} - {data}
       </Typography>
       <Typography variant="body2">{text}</Typography>
     </Box>
   );
 };
 
-export default Post;
+export default Event;
