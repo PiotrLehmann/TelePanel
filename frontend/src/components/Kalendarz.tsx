@@ -49,7 +49,7 @@ const Kalendarz = () => {
 
   const [value, setValue] = useState<any | null>(dayjs());
 
-  function ServerDay(
+  function ServerDay (
     props: PickersDayProps<Dayjs> & { highlightedDays?: number[] }
   ) {
     const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
@@ -139,7 +139,7 @@ const Kalendarz = () => {
     dayClicked = !dayClicked;
     setValue(date);
     setSelectedMonth(date);
-    setIsLoading(true);
+    // setIsLoading(true);
     setDayEvents([]);
     setEvents([]);
     var tmpEvents = [];
@@ -154,12 +154,12 @@ const Kalendarz = () => {
           tmpEvents.push(day);
         }
       });
-      setIsLoading(false);
+      // setIsLoading(false);
     } catch (error) {
       console.log(error);
-      setIsLoading(false);
+      // setIsLoading(false);
     }
-    setIsLoading(false);
+    // setIsLoading(false);
     await setDayEvents(tmpEvents);
 
     if (!firstOpenning) {
@@ -169,7 +169,7 @@ const Kalendarz = () => {
   };
   useEffect(() => {
     handleDayChange();
-  }, []);
+  }, [firstOpenning]);
 
   // ************************************
   // FORM TO SEND EVENT
@@ -229,7 +229,17 @@ const Kalendarz = () => {
       if (input2Ref.current) {
         input2Ref.current.value = "";
       }
-
+      console.log(dayEvents);
+      await setDayEvents(dayEvents.push(data));
+      console.log(dayEvents);
+      dayEvents.map((eve) => {
+        console.log(eve.title);
+        console.log(eve.date);
+        console.log(eve.author);
+        console.log(eve.eventText);
+      });
+      
+      
       // setMessage("Dodano wydarzenie!");
       // handleToast();
       // setAnnouncements([...announcements, data]); //to do
@@ -237,8 +247,12 @@ const Kalendarz = () => {
       // setMessage("Wystąpił błąd!");
       // handleToast();
     }
+    
+    
+    
     handleDayChange(value);
     handleMonthChange(value);
+    firstOpenning=!firstOpenning;
   };
 
   return (
