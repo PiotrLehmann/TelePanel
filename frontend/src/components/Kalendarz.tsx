@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Fade, Modal, Typography } from "@mui/material";
+import { Box, Card, CardContent, Fade, Modal, Typography, List } from "@mui/material";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { useState, useRef, useEffect } from "react";
 import dayjs, { Dayjs } from 'dayjs';
@@ -10,6 +10,7 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 import axios from "axios";
+import Event from "./Kalendarz/Event";
 
 
 const Kalendarz = () => {
@@ -30,9 +31,9 @@ const Kalendarz = () => {
   };
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<Dayjs | null>(null);
+  const [selectedMonth, setSelectedMonth] = useState<Dayjs | null>(dayjs());
 
-  const [value, setValue] = useState<any | null>(null);
+  const [value, setValue] = useState<any | null>(dayjs());
   
   function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDays?: number[] }) {
     
@@ -56,12 +57,15 @@ const Kalendarz = () => {
   }
   
 
-    const requestAbortController = useRef<AbortController | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [highlightedDays, setHighlightedDays] = useState([]);
-  
-  
+  const requestAbortController = useRef<AbortController | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [highlightedDays, setHighlightedDays] = useState([]);
   const [events, setEvents] = useState([]);
+  // const [dayEevents, setDayEvents] = useState([]);
+
+  var dayEvents = events;
+  // var dayEvents = [];
+
 
   const fetchEvents = async () => {
     try {
@@ -115,16 +119,56 @@ const Kalendarz = () => {
       handleMonthChange();
     }, []);
 
-    // const handleDayChange = (date: Dayjs) => {
-    //   if (requestAbortController.current) {
-    //     // make sure that you are aborting useless requests
-    //     // because it is possible to switch between months pretty quickly
-    //     requestAbortController.current.abort();
-    //   }
+    const handleDayChange = (date: Dayjs) => {
+      setValue(date)
+      setSelectedMonth(date);
+      setIsLoading(true);
+      // dayEvents=[];
+      setEvents([]);
+      console.log("--------------------------------------------");
+      console.log(events.date);
       
-    //   setSelectedMonth(date);
-    //   setIsLoading(true);
-    // };
+      console.log(events);
+      console.log(dayEvents);
+      console.log(selectedMonth);
+      console.log(value);
+      
+      fetchEvents();
+      try {
+        events.map((day) => {
+          console.log(day);
+          console.log(selectedMonth);
+          console.log(dayjs(day.date).year() == value.year());
+          console.log(dayjs(day.date).month()   === value.month());
+          console.log(dayjs(day.date).date()   === value.date());
+          console.log(dayjs(day.date).date());
+          console.log(value.date());
+          if ( ( dayjs(day.date).year() == value.year() ) && ( dayjs(day.date).month()   === value.month() ) && ( dayjs(day.date).date()   === value.date() ) ) {
+            console.log(day);
+            console.log("IN LOOOOOP");
+            console.log(day);
+            
+            dayEvents.push(day);
+            console.log(dayEvents);
+            
+          }
+        })
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      } 
+      setIsLoading(false);
+      console.log("SPLITTER ###############");
+      
+      console.log(events);
+      console.log(dayEvents.length);
+      
+      
+    }
+    // useEffect(() => {
+    //   handleDayChange();
+    // }, [dayEvents]);
 
   return (
     <>
@@ -164,31 +208,55 @@ const Kalendarz = () => {
               orientation="landscape" 
               defaultValue={dayjs()} 
               loading={isLoading}
-
-              onChange={(newValue) => {
-                setValue(newValue);
-              }}
+              onChange={handleDayChange}
               onMonthChange={handleMonthChange}
-              renderLoading={() => <DayCalendarSkeleton />}
-              slots={{
-                day: ServerDay,
-              }}
-              slotProps={{
-                day: {
-                  highlightedDays,
-                } as any,
-              }} />
+              // renderLoading={() => <DayCalendarSkeleton />}      // BADGES TO BE FIXED.
+              // slots={{
+              //   day: ServerDay,
+              // }}
+              // slotProps={{
+              //   day: {
+              //     highlightedDays,
+              //   } as any,
+              // }} 
+              />
             </LocalizationProvider>
-          <Box  width={{ xl: "10vw", sm: "10vw" }} >
+          <List sx={{
+                        overflowY: "scroll",
+                        "&::-webkit-scrollbar": { display: "none" },
+                        height: "75vh",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
             { value?.year() };
             { value?.month() };
             { value?.date() };
+            {dayEvents.length}
             -----------------,,,
             {value?.format()};
             ____________________
             {dayjs('2018-07-18T21:17:02+02:00').format() /* zwaraca to samo */ } 
+            {dayEvents.map((eve) => {
+                  //   console.log("HALO");
+                  // console.log(events);
+                  // console.log(dayEvents);
+                  
+                  
+                  return (
+                    <Event
+                    title={eve.title}
+                    data={eve.date}
+                    user={eve.author}
+                    text={eve.eventText}
+                    />
+                  );
+                // }
+              })
+            }
+            </List>
             
-          </Box>
           </Box>
         </Fade>
       </Modal>
