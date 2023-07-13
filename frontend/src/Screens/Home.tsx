@@ -98,7 +98,7 @@ function App() {
 
   useEffect(() => {
     fetchAnnouncements();
-  }, []);
+  }, [announcements]);  // NIE FAJNIE ALE SIE ODSWIEZA CHOCIAZ :/
 
   const [openProfile, setOpenProfile] = useState(false);
   const handleOpenProfile = () => setOpenProfile(true);
