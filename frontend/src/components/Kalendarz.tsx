@@ -20,6 +20,7 @@ const Kalendarz = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   var dayClicked = false;
+  var firstOpenning = false;
 
   const style = {
     position: "absolute" as "absolute",
@@ -139,6 +140,11 @@ const Kalendarz = () => {
       } 
       setIsLoading(false);   
       await setDayEvents(tmpEvents);
+
+      if (!firstOpenning) {
+        firstOpenning=!firstOpenning;
+        handleMonthChange(date)
+      }
     }
     useEffect(() => {
       handleDayChange();
@@ -245,7 +251,7 @@ const Kalendarz = () => {
             boxShadow: 24,
             p: 4,
             display:"flex",
-            }} width={{ xl: "40vw", sm: "90vw" }}
+            }} width={{ xl: "90vw", sm: "70vw" }}
           >
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <StaticDatePicker 
