@@ -61,10 +61,10 @@ const Kalendarz = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [highlightedDays, setHighlightedDays] = useState([]);
   const [events, setEvents] = useState([]);
-  // const [dayEevents, setDayEvents] = useState([]);
+  const [dayEvents, setDayEvents] = useState([]);
 
-  var dayEvents = events;
-  // var dayEvents = [];
+  // var dayEvents = events;
+  // let dayEvents = [];
 
 
   const fetchEvents = async () => {
@@ -103,7 +103,7 @@ const Kalendarz = () => {
       let currentMarks = [];
       try {
         events.map((day) => {
-          if ( ( dayjs(day.date).year() == selectedMonth.year() ) && ( dayjs(day.date).month()   === selectedMonth.month() ) ) {
+          if ( ( dayjs(day.date).year() == currentDate.year() ) && ( dayjs(day.date).month()   === currentDate.month() ) ) {
             currentMarks.push(dayjs(day.date).date())
           }
         })
@@ -119,38 +119,25 @@ const Kalendarz = () => {
       handleMonthChange();
     }, []);
 
-    const handleDayChange = (date: Dayjs) => {
+    const handleDayChange = async (date: Dayjs) => {
+      console.log("------------");
+      
       setValue(date)
       setSelectedMonth(date);
       setIsLoading(true);
-      // dayEvents=[];
+      setDayEvents([]);
       setEvents([]);
-      console.log("--------------------------------------------");
-      console.log(events.date);
+      var tmpEvents = [];
+      await fetchEvents();
+      console.log("KLIK");
       
-      console.log(events);
-      console.log(dayEvents);
-      console.log(selectedMonth);
-      console.log(value);
-      
-      fetchEvents();
       try {
+        console.log("PROBUJE");
+        
         events.map((day) => {
-          console.log(day);
-          console.log(selectedMonth);
-          console.log(dayjs(day.date).year() == value.year());
-          console.log(dayjs(day.date).month()   === value.month());
-          console.log(dayjs(day.date).date()   === value.date());
-          console.log(dayjs(day.date).date());
-          console.log(value.date());
-          if ( ( dayjs(day.date).year() == value.year() ) && ( dayjs(day.date).month()   === value.month() ) && ( dayjs(day.date).date()   === value.date() ) ) {
-            console.log(day);
-            console.log("IN LOOOOOP");
-            console.log(day);
-            
-            dayEvents.push(day);
+          if ( ( dayjs(day.date).year() == date.year() ) && ( dayjs(day.date).month()   === date.month() ) && ( dayjs(day.date).date()   === date.date() ) ) {       
+            tmpEvents.push(day);
             console.log(dayEvents);
-            
           }
         })
         setIsLoading(false);
@@ -159,16 +146,22 @@ const Kalendarz = () => {
         setIsLoading(false);
       } 
       setIsLoading(false);
-      console.log("SPLITTER ###############");
+      console.log(value);
+      console.log(date);
       
-      console.log(events);
-      console.log(dayEvents.length);
+      
+      console.log("MID KLIK");
+      await setDayEvents(tmpEvents);
+      console.log(dayEvents);
+      
+      console.log("PO KLIKU");
+      
       
       
     }
-    // useEffect(() => {
-    //   handleDayChange();
-    // }, [dayEvents]);
+    useEffect(() => {
+      handleDayChange();
+    }, []);
 
   return (
     <>
@@ -210,40 +203,32 @@ const Kalendarz = () => {
               loading={isLoading}
               onChange={handleDayChange}
               onMonthChange={handleMonthChange}
-              // renderLoading={() => <DayCalendarSkeleton />}      // BADGES TO BE FIXED.
-              // slots={{
-              //   day: ServerDay,
-              // }}
-              // slotProps={{
-              //   day: {
-              //     highlightedDays,
-              //   } as any,
-              // }} 
+              renderLoading={() => <DayCalendarSkeleton />}      // BADGES TO BE FIXED.
+              slots={{
+                day: ServerDay,
+              }}
+              slotProps={{
+                day: {
+                  highlightedDays,
+                } as any,
+              }} 
               />
             </LocalizationProvider>
           <List sx={{
-                        overflowY: "scroll",
-                        "&::-webkit-scrollbar": { display: "none" },
-                        height: "75vh",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                      }}
-                    >
-            { value?.year() };
-            { value?.month() };
-            { value?.date() };
-            {dayEvents.length}
-            -----------------,,,
-            {value?.format()};
-            ____________________
-            {dayjs('2018-07-18T21:17:02+02:00').format() /* zwaraca to samo */ } 
-            {dayEvents.map((eve) => {
-                  //   console.log("HALO");
-                  // console.log(events);
-                  // console.log(dayEvents);
-                  
-                  
+              overflowY: "scroll",
+              "&::-webkit-scrollbar": { display: "none" },
+              height: "75vh",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+            >
+
+              {value?.date()}
+              {}
+            { 
+            if
+            dayEvents.map((eve) => {
                   return (
                     <Event
                     title={eve.title}
@@ -252,7 +237,6 @@ const Kalendarz = () => {
                     text={eve.eventText}
                     />
                   );
-                // }
               })
             }
             </List>

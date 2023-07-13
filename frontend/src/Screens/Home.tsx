@@ -97,7 +97,7 @@ function App() {
 
   useEffect(() => {
     fetchAnnouncements();
-  }, [announcements]);
+  }, []);
 
   return (
     <ThemeProvider theme={lightTheme ? themeLight : themeDark}>
