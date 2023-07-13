@@ -16,6 +16,7 @@ import {
   Modal,
   Fade,
   Avatar,
+  CardMedia,
 } from "@mui/material";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -33,6 +34,7 @@ import Materialy from "../components/Materialy";
 import Kalendarz from "../components/Kalendarz";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
+import teleinfa from "../assets/images/teleinfa.jpg";
 
 const themeDark = createTheme({
   palette: {
@@ -98,7 +100,7 @@ function App() {
 
   useEffect(() => {
     fetchAnnouncements();
-  }, [announcements]);  // NIE FAJNIE ALE SIE ODSWIEZA CHOCIAZ :/
+  }, [announcements]); // NIE FAJNIE ALE SIE ODSWIEZA CHOCIAZ :/
 
   const [openProfile, setOpenProfile] = useState(false);
   const handleOpenProfile = () => setOpenProfile(true);
@@ -327,7 +329,17 @@ function App() {
               </Card>
             </Grid>
             <Grid item xs={12} md={6} xl={6}>
-              <Card
+              {/* <Card
+                style={{
+                  borderRadius: 5,
+                  boxShadow: 3,
+                  ":hover": {
+                    boxShadow: 20,
+                  },
+                  height: "89vh",
+                }}
+              > */}
+              <Box
                 sx={{
                   borderRadius: 5,
                   boxShadow: 3,
@@ -337,12 +349,18 @@ function App() {
                   height: "89vh",
                 }}
               >
-                <CardContent>
-                  <Typography ml={1} variant="h4">
-                    Ten Tydzień
-                  </Typography>
-                </CardContent>
-              </Card>
+                <img
+                  style={{
+                    height: "89vh",
+                    objectFit: "cover",
+                    borderRadius: 15,
+                    objectPosition: "90%",
+                    filter: "brightness(45%)",
+                  }}
+                  src={teleinfa}
+                />
+              </Box>
+              {/* </Card> */}
             </Grid>
           </Grid>
         </Grid>
