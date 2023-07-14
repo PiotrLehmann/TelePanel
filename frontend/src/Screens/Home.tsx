@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AnnouncementContext } from '../context/AnnouncementContext';
 import { Circle, useToast } from "@chakra-ui/react";
 import { ThemeProvider } from "@emotion/react";
 import {
@@ -77,7 +78,8 @@ function App() {
   //const [postList, setPostList] = useState([]);
   const toast = useToast();
 
-  const [announcements, setAnnouncements] = useState([]);
+  const { announcements, setAnnouncements } = useContext(AnnouncementContext)!;
+  // const [announcements, setAnnouncements] = useState([]);
 
   const fetchAnnouncements = async () => {
     try {

@@ -11,7 +11,8 @@ import {
   Alert,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AnnouncementContext } from '../context/AnnouncementContext';
 import axios from "axios";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
@@ -20,6 +21,7 @@ const GroupChatModal: React.FC = ({ children }: any) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [author, setAuthor] = useState("");
+  const { announcements, setAnnouncements } = useContext(AnnouncementContext)!;
 
   const typingHandlerTitle = (e: any) => {
     setTitle(e.target.value);
@@ -86,7 +88,7 @@ const GroupChatModal: React.FC = ({ children }: any) => {
 
       setMessage("Dodano ogłoszenie!");
       handleToast();
-      // setAnnouncements([...announcements, data]); //to do
+      setAnnouncements([...announcements, data]); //to do
     } catch (error) {
       setMessage("Wystąpił błąd!");
       handleToast();
