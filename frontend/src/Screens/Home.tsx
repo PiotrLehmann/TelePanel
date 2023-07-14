@@ -36,6 +36,9 @@ import Kalendarz from "../components/Kalendarz";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import teleinfa from "../assets/images/teleinfa.jpg";
+import config from "../Config";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { useNavigate } from "react-router-dom";
 
 const themeDark = createTheme({
   palette: {
@@ -104,6 +107,24 @@ function App() {
     fetchAnnouncements();
   }, []); // NIE FAJNIE ALE SIE ODSWIEZA CHOCIAZ :/ TAK NIE WOLNO >:(
 
+  const publicClientApplication = new PublicClientApplication({
+    auth: {
+      clientId: config.appId,
+      redirectUri: config.redirectUrl,
+    },
+    cache: {
+      cacheLocation: "sessionStorage",
+      storeAuthStateInCookie: true,
+    },
+  });
+
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    publicClientApplication.logout();
+    navigate("/login");
+  };
+
   const [openProfile, setOpenProfile] = useState(false);
   const handleOpenProfile = () => setOpenProfile(true);
   const handleCloseProfile = () => setOpenProfile(false);
@@ -164,7 +185,7 @@ function App() {
                   >
                     <PersonIcon fontSize="medium" />
                   </Button>
-                  <Button sx={{ height: "100%", borderRadius: 5 }}>
+                  <Button onClick={logoutHandler} sx={{ height: "100%", borderRadius: 5 }}>
                     <LogoutIcon fontSize="medium" />
                   </Button>
                 </CardActions>
