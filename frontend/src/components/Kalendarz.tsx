@@ -49,7 +49,7 @@ const Kalendarz = () => {
 
   const [value, setValue] = useState<any | null>(dayjs());
 
-  function ServerDay (
+  function ServerDay(
     props: PickersDayProps<Dayjs> & { highlightedDays?: number[] }
   ) {
     const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
@@ -238,8 +238,7 @@ const Kalendarz = () => {
         console.log(eve.author);
         console.log(eve.eventText);
       });
-      
-      
+
       // setMessage("Dodano wydarzenie!");
       // handleToast();
       // setAnnouncements([...announcements, data]); //to do
@@ -247,12 +246,10 @@ const Kalendarz = () => {
       // setMessage("Wystąpił błąd!");
       // handleToast();
     }
-    
-    
-    
+
     handleDayChange(value);
     handleMonthChange(value);
-    firstOpenning=!firstOpenning;
+    firstOpenning = !firstOpenning;
   };
 
   return (
@@ -386,8 +383,8 @@ const Kalendarz = () => {
                   sx={{ marginBottom: 2, textAlign: "center" }}
                   inputRef={input2Ref}
                 />
-                Wybrana data: {value?.date()}/{value?.month() + 1}/
-                {value?.year()}
+                Wybrana data: {value ? value?.date() : "-"}/
+                {value ? value?.month() + 1 : "-"}/{value ? value?.year() : "-"}
                 <Button
                   sx={{ marginTop: 2 }}
                   variant="contained"
